@@ -21,12 +21,6 @@ cd Dvc-Assesment
 ### 2. Install Dependencies
 
 ```bash
-npm install
-```
-
-or
-
-```bash
 yarn
 ```
 
@@ -67,14 +61,14 @@ npx prisma migrate dev --name init
 #### Development Mode (with hot-reloading)
 
 ```bash
-npm run start:dev
+yarn start:dev
 ```
 
 #### Production Build
 
 ```bash
-npm run build
-npm run start:prod
+yarn build
+yarn start:prod
 ```
 
 ---
@@ -91,5 +85,5 @@ You’ll be able to run queries, mutations, and explore the schema.
 ## 🧪 Testing
 
 ```bash
-npm run test
+yarn test
 ```
