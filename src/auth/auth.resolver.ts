@@ -4,6 +4,11 @@ import { AuthService } from './auth.service';
 import { SignupInput } from './dto/inputs';
 import { CustomResponse } from 'src/common';
 import { SignInArgs, SigninWithBiometricsArgs } from './dto/args';
+import { CurrentUser } from 'src/common/decorators/current-user.decorator';
+import { IAuthToken } from './interfaces';
+import { User } from 'src/users/model';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/common/guards';
 
 @Resolver(() => AuthResponse)
 export class AuthResolver {
@@ -24,5 +29,11 @@ export class AuthResolver {
     @Args() signinWithBiometricsArgs: SigninWithBiometricsArgs,
   ) {
     return this.authService.signinWithBiometric(signinWithBiometricsArgs);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Query(() => User)
+  whoAmi(@CurrentUser() currentUser: IAuthToken) {
+    return this.authService.whoAmi(currentUser);
   }
 }

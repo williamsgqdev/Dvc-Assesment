@@ -1,5 +1,6 @@
 import {
   Injectable,
+  NotFoundException,
   UnauthorizedException,
   UnprocessableEntityException,
 } from '@nestjs/common';
@@ -12,6 +13,7 @@ import { JwtService } from '@nestjs/jwt';
 import { IAuthToken } from './interfaces';
 import { ConfigService } from '@nestjs/config';
 import { AuthResponse } from './model';
+import { User } from 'src/users/model';
 
 @Injectable()
 export class AuthService {
@@ -121,5 +123,11 @@ export class AuthService {
       hashLength: 32,
     });
     return hash;
+  }
+
+  async whoAmi(currentUser: IAuthToken): Promise<User> {
+    const userData = await this.usersService.findUserByEmail(currentUser.email);
+    if (!userData) throw new NotFoundException('Invalid credentials');
+    return userData;
   }
 }
